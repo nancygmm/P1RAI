@@ -1,0 +1,13 @@
+rules_version = '2';
+
+// Semana 2: acceso a Firestore solo desde código server-side
+// (Cloud Functions con Admin SDK bypass las reglas). El acceso
+// desde clientes queda bloqueado hasta Semana 3 donde se expone
+// vía API paginada.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
