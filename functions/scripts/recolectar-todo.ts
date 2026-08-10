@@ -17,8 +17,9 @@ import {generarMatriz} from "../src/keywords";
 
 const ENDPOINT =
   process.env.ENDPOINT ??
-  "http://127.0.0.1:5001/p1raigabyfb/us-central1/recolectar";
-  //"http://127.0.0.1:5001/p1raigabyfb/us-central1/recolectar"; //codigo Gabriela
+  //"http://127.0.0.1:5001/p1raigabyfb/us-central1/recolectar"; //codigo ejemplo
+  //aqui debes de cambiar el nombre de tu proyecto
+  "http://127.0.0.1:5001/YOUR_NAME_PROJECT/us-central1/recolectar";
 
 const MAX_ENV = process.env.MAX ? Number(process.env.MAX) : undefined;
 const DELAY_MS = process.env.DELAY_MS ?
