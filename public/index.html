@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Directorio de Médicos Especialistas
+    </title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+
+
+    <main class="contenedor">
+
+
+        <header class="encabezado">
+
+            <h1>
+                Directorio de Médicos Especialistas
+            </h1>
+
+            <p>
+                Ciudad de Guatemala
+            </p>
+
+        </header>
+
+
+        <section class="panel-busqueda">
+
+
+            <div class="campo">
+
+                <label for="especialidad">
+                    Especialidad
+                </label>
+
+                <input type="text" id="especialidad" placeholder="Ej. Cardiología">
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="zona">
+                    Zona
+                </label>
+
+                <input type="text" id="zona" placeholder="Ej. 10">
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="pageSize">
+                    Resultados
+                </label>
+
+                <select id="pageSize">
+
+                    <option value="5">
+                        5
+                    </option>
+
+                    <option value="10" selected>
+                        10
+                    </option>
+
+                    <option value="20">
+                        20
+                    </option>
+
+                    <option value="50">
+                        50
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="acciones">
+
+                <button id="btnBuscar" type="button">
+                    Buscar
+                </button>
+
+
+                <button id="btnLimpiar" type="button" class="secundario">
+                    Limpiar
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <section class="estado">
+
+            <p id="mensajeEstado">
+                Presiona Buscar para consultar el directorio.
+            </p>
+
+        </section>
+
+
+        <section class="tabla-contenedor">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Nombre
+                        </th>
+
+                        <th>
+                            Especialidad
+                        </th>
+
+                        <th>
+                            Zona
+                        </th>
+
+                        <th>
+                            Dirección
+                        </th>
+
+                        <th>
+                            Teléfono
+                        </th>
+
+                        <th>
+                            Sitio web
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="tablaResultados">
+
+                </tbody>
+
+
+            </table>
+
+
+        </section>
+
+
+        <section class="paginacion">
+
+            <button id="btnAnterior" type="button" disabled>
+                Anterior
+            </button>
+
+
+            <span id="textoPagina">
+
+                Página 1
+
+            </span>
+
+
+            <button id="btnSiguiente" type="button" disabled>
+                Siguiente
+            </button>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+
+</body>
+
+</html>

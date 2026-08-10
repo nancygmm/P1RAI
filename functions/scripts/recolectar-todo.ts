@@ -6,7 +6,7 @@
 // Uso completo:
 //   npm run recolectar
 // Contra producción:
-//   ENDPOINT=https://us-central1-p1raigabyfb.cloudfunctions.net/recolectar \
+//   ENDPOINT=https://us-central1-p1raifb.cloudfunctions.net/recolectar \
 //     npm run recolectar
 //
 // Cada invocación golpea /recolectar, que a su vez consume Places API.
@@ -18,6 +18,7 @@ import {generarMatriz} from "../src/keywords";
 const ENDPOINT =
   process.env.ENDPOINT ??
   "http://127.0.0.1:5001/p1raigabyfb/us-central1/recolectar";
+  //"http://127.0.0.1:5001/p1raigabyfb/us-central1/recolectar"; //codigo Gabriela
 
 const MAX_ENV = process.env.MAX ? Number(process.env.MAX) : undefined;
 const DELAY_MS = process.env.DELAY_MS ?
