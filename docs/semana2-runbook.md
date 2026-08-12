@@ -99,8 +99,3 @@ npm run recolectar
 Con delay bajo se puede ajustar: `DELAY_MS=500 npm run recolectar`
 (cuidado con rate limits de Places).
 
-Contra producción:
-```bash
-ENDPOINT="https://us-central1-p1raigabyfb.cloudfunctions.net/recolectar" \
-  npm run recolectar
-```
