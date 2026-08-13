@@ -39,6 +39,13 @@
           "functionId": "directorio",
           "region": "us-central1"
         }
+      },
+      {
+        "source": "/recolectar",
+        "function": {
+          "functionId": "recolectar",
+          "region": "us-central1"
+        }
       }
     ]
   },
@@ -53,7 +60,7 @@
     },
 
     "hosting": {
-      "port": 5000
+      "port": 5050
     },
 
     "ui": {
