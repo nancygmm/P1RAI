@@ -1,4 +1,4 @@
-# Documentación técnica, Semana 4
+# Documentación Técnica
 
 Proyecto 1: Directorio de Médicos Especialistas, CC3106 Responsible AI, UVG.
 Cliente: Ministerio de Educación de Guatemala. Equipo de 4 personas.
@@ -7,8 +7,8 @@ Cliente: Ministerio de Educación de Guatemala. Equipo de 4 personas.
 
 El Ministerio de Educación necesita un directorio de médicos especialistas en
 Ciudad de Guatemala (nombre, especialidad, dirección, teléfono, sitio web).
-El equipo construyó el sistema que **recolecta** esos datos desde Google
-Places API, los **almacena** en Firestore, y los **expone** a través de una
+El equipo construyó el sistema que recolecta esos datos desde Google
+Places API, los almacena en Firestore, y los expone a través de una
 API paginada y una interfaz web mínima.
 
 Stack: TypeScript, Firebase Functions v2, Firestore, Google Places API,
@@ -39,12 +39,12 @@ más; ninguna llamada a Firestore ni a Places API ocurre en ese caso.
 La query se construye como `{keyword} zona {zona} Guatemala`
 (ej. `cardiólogo zona 10 Guatemala`).
 
-Para cubrir la nomenclatura inconsistente de Google Maps, se buscan **dos
-patrones léxicos** por especialidad: el practicante (`cardiólogo`) y la
-forma de clínica (`clínica cardiológica`). La matriz completa cubre **20
-especialidades × 6 zonas × 2 patrones = 240 combinaciones**.
+Para cubrir la nomenclatura inconsistente de Google Maps, se buscan dos
+patrones léxicos por especialidad: el practicante (`cardiólogo`) y la
+forma de clínica (`clínica cardiológica`). La matriz completa cubre 20
+especialidades × 6 zonas × 2 patrones = 240 combinaciones.
 
-En Firestore, el campo `especialidad` guarda siempre el **nombre canónico**
+En Firestore, el campo `especialidad` guarda siempre el nombre canónico
 del catálogo (ej. `"Cardiología"`), independientemente de qué patrón léxico
 encontró el lugar; así la API de consulta filtra sin tener que mapear
 variantes. El `keyword_usado` (query textual completa) se guarda aparte
@@ -67,28 +67,24 @@ Zonas cubiertas: 1, 9, 10, 14, 15, 16. Especialidades: ver
   (ignorado por git) para desarrollo con el emulador.
 - **Restricción de la API key, decisión documentada**: el enunciado pide
   restringir la key por IP en la consola de GCP. En la práctica, las Cloud
-  Functions no tienen una IP de salida fija,Google asigna una IP dinámica
+  Functions no tienen una IP de salida fija, Google asigna una IP dinámica
   y compartida para las llamadas salientes de la función. Al restringir la
   key por IP, las llamadas reales a Places API desde `recolectar` fallaban
   con `REQUEST_DENIED` (verificado directamente en logs de producción).
   Lograr una IP de salida estática requiere un VPC connector + Cloud NAT,
   con un costo recurrente (~$30-70/mes) desproporcionado para el
-  presupuesto de $5 del proyecto. Se optó por restringir la key **solo por
-  API** (Places API legacy + New, ninguna otra), sin restricción de IP;
+  presupuesto de $5 del proyecto. Se optó por restringir la key solo por
+  API (Places API legacy + New, ninguna otra), sin restricción de IP;
   la misma lógica de costo-beneficio que el enunciado ya permite
   explícitamente para la alternativa de Cloud Armor.
 
 ## 5. Costos y responsabilidad
 
-- Alerta de billing configurada al 50% y 90% de un presupuesto de $5
-  (screenshot en `docs/image/`).
+![Alerta de billing configurada al 50%, 90% y 100% de un presupuesto de $5](image/Costos.png)
+
+- Alerta de billing configurada al 50% y 90% de un presupuesto de $5.
 - Cuota diaria configurada en ambas Places API (legacy y New): 250
   requests/día cada una.
-- Costo real medido: Text Search (~$0.032) + hasta 20 Place Details
-  (~$0.017 c/u) ≈ **$0.37 por combinación** recolectada.
-- Con la matriz completa (240 combos) el costo estimado es ~$88; el equipo
-  recolectó un subconjunto acotado para no exceder el presupuesto
-  individual de cada integrante (cada quien usa su propio proyecto GCP).
 
 ## 6. Postura ética
 
@@ -108,18 +104,3 @@ Zonas cubiertas: 1, 9, 10, 14, 15, 16. Especialidades: ver
 - **La restricción de IP de la API key se relajó por una limitación técnica
   real**, no por conveniencia; ver sección 4. Se documenta la decisión en
   vez de dejarla implícita.
-
-## 7. Limitaciones conocidas
-
-- El whitelist de IP protege también `GET /directorio`, que es de solo
-  lectura y sin costo. Esto significa que cualquier visitante de la demo
-  cuya IP no esté en `ALLOWED_IPS` verá un error 403 en la UI pública 
-  incluyendo evaluadores el día de la presentación, salvo que se agregue la
-  IP de antemano. 
-- Las IPs de los integrantes son dinámicas (IP pública residencial/móvil),
-  por lo que `ALLOWED_IPS` requiere actualizarse manualmente cuando cambian.
-- Solo se recolectó un subconjunto de la matriz de 240 combinaciones
-  posibles; el dataset en Firestore no cubre todas las especialidades ni
-  zonas todavía.
-
-
